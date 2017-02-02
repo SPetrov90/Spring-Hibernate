@@ -18,14 +18,13 @@ import java.util.Properties;
 
 /**
  * Created by Sergey on 01.02.2017.
- * Hibernate config - settings at hibernate.properties file
+ * Hibernate config - settings in hibernate.properties file
  */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"ru.sergey90.hibernate"})
 @PropertySource(value = {"classpath:hibernate.properties"})
 public class HibernateConfig {
-
     private Environment environment;
 
     @Autowired
@@ -49,7 +48,6 @@ public class HibernateConfig {
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
         properties.put("show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         properties.put("hibernate.max_fetch_depth", environment.getRequiredProperty("hibernate.max_fetch_depth"));
         properties.put("hibernate.jdbc.fetch_size", environment.getRequiredProperty("hibernate.jdbc.fetch_size"));
         properties.put("hibernate.jdbc.batch_size", environment.getRequiredProperty("hibernate.jdbc.batch_size"));
@@ -60,7 +58,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ru.sergey90.hibernate");
+        sessionFactory.setPackagesToScan("ru.sergey90.hibernate.*");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

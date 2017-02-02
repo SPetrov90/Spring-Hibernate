@@ -1,6 +1,7 @@
 package ru.sergey90.hibernate.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,10 +9,19 @@ import java.util.Set;
 /**
  * Created by Sergey on 01.02.2017.
  */
+
 @Entity
 @Table(name = "contact")
-public class Contact {
-    private Long id;
+@NamedQueries({
+        @NamedQuery(name = "Contact.findById",
+        query = "select distinct c from ru.sergey90.hibernate.entity.Contact c left join fetch c.contactDetails t " +
+                "left join fetch c.hobbies h where c.id =:id"),
+        @NamedQuery(name="Contact.findAllWithDetails" ,
+        query="select distinct c from ru.sergey90.hibernate.entity.Contact c left join fetch c.contactDetails t " +
+                "left join fetch c.hobbies h")
+})
+public class Contact implements Serializable {
+    private int id;
     private int version;
     private String firstName;
     private String lastName;
@@ -22,11 +32,11 @@ public class Contact {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

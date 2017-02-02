@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "contact_tel_detail")
 public class ContactDetail implements Serializable {
-    private Long id;
+    private int id;
     private int version;
     private String telType;
     private String telNumber;
@@ -26,11 +26,11 @@ public class ContactDetail implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
